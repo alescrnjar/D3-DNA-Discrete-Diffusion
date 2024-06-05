@@ -1,6 +1,7 @@
 import torch
 import argparse
 import sys
+import numpy as np #AC
 
 import data
 from load_model import load_model_local
@@ -9,8 +10,10 @@ import sampling
 import h5py, os
 from torch.utils.data import DataLoader, TensorDataset, DistributedSampler
 
-from PL_DeepSTARR import *
-
+#from PL_DeepSTARR import *
+import sys #AC
+sys.path.append('../Occasio_Dev/src/') #AC
+from PL_Models import *
 
 def main():
     parser = argparse.ArgumentParser(description="Generate some samples")
@@ -24,9 +27,12 @@ def main():
     model, graph, noise = load_model_local(args.model_path, device)
 
     #Deepstarr
-    filepath = os.path.join('DeepSTARR_data.h5') #load DeepSTARR data
+    #filepath = os.path.join('DeepSTARR_data.h5') #load DeepSTARR data
+    filepath = os.path.join('../Occasio_Dev/inputs/LentiMPRA_processed_for_dal.h5') #AC
     data = h5py.File(filepath, 'r')
-    ckpt_aug_path = os.path.join('oracle_DeepSTARR_DeepSTARR_data.ckpt') #Load DeepSTARR oracle model
+    #ckpt_aug_path = os.path.join('oracle_DeepSTARR_DeepSTARR_data.ckpt') #Load DeepSTARR oracle model
+    #ckpt_aug_path = os.path.join('../Occasio_Dev/inputs/oracle_ResidualBind_LentiMPRA_processed_for_dal_relustandard1.ckpt') #AC
+    ckpt_aug_path = os.path.join('../Occasio_Dev/inputs/oracle_LegNet_LentiMPRA_processed_for_dal_bs100.ckpt') #AC
 
     #We select test data to calculate MSE and generate samples. Change if required
     X_test = torch.tensor(np.array(data['X_test']))
@@ -35,7 +41,8 @@ def main():
     testing_ds = TensorDataset(X_test, y_test)
     test_ds = torch.utils.data.DataLoader(testing_ds, batch_size=args.batch_size, shuffle=False,
                                              num_workers=4)
-    deepstarr = PL_DeepSTARR.load_from_checkpoint(ckpt_aug_path, input_h5_file=filepath).eval()
+    #deepstarr = PL_DeepSTARR.load_from_checkpoint(ckpt_aug_path, input_h5_file=filepath).eval()
+    deepstarr = PL_LegNet.load_from_checkpoint(ckpt_aug_path, input_h5_file=filepath).eval() #AC
 
     val_pred_seq = []
     for _, (batch, val_target) in enumerate(test_ds):
