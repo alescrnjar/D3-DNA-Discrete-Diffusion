@@ -28,11 +28,11 @@ def main():
 
     #Deepstarr
     #filepath = os.path.join('DeepSTARR_data.h5') #load DeepSTARR data
-    filepath = os.path.join('../Occasio_Dev/inputs/LentiMPRA_processed_for_dal.h5') #AC
+    filepath = os.path.join('../../Occasio_Dev/inputs/LentiMPRA_processed_for_dal.h5') #AC
     data = h5py.File(filepath, 'r')
     #ckpt_aug_path = os.path.join('oracle_DeepSTARR_DeepSTARR_data.ckpt') #Load DeepSTARR oracle model
     #ckpt_aug_path = os.path.join('../Occasio_Dev/inputs/oracle_ResidualBind_LentiMPRA_processed_for_dal_relustandard1.ckpt') #AC
-    ckpt_aug_path = os.path.join('../Occasio_Dev/inputs/oracle_LegNet_LentiMPRA_processed_for_dal_bs100.ckpt') #AC
+    ckpt_aug_path = os.path.join('../../Occasio_Dev/inputs/oracle_LegNet_LentiMPRA_processed_for_dal_bs100.ckpt') #AC
 
     #We select test data to calculate MSE and generate samples. Change if required
     X_test = torch.tensor(np.array(data['X_test']))
