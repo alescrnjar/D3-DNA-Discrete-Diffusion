@@ -11,3 +11,7 @@ echo "conda activate d3"
 python train.py noise.type=geometric graph.type=uniform model=small model.scale_by_sigma=False
 
 # PROSS: esegui senza il .h5 di deepstarr: cosi' capirai dove manca. Probabilmente data.py get_dataloaders
+
+#pip install hydra can work but if it doesnt:
+#pip install hydra-core==1.3.2
+#pip install hydra-submitit-launcher==1.2.0
