@@ -12,7 +12,7 @@ from torch.utils.data import DataLoader, TensorDataset, DistributedSampler
 
 #from PL_DeepSTARR import *
 import sys #AC
-sys.path.append('../Occasio_Dev/src/') #AC
+sys.path.append('../../Occasio_Dev/src/') #AC
 from PL_Models import *
 
 def main():
