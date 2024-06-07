@@ -28,8 +28,8 @@ def main():
 
     #Deepstarr
     #filepath = os.path.join('DeepSTARR_data.h5') #load DeepSTARR data
-    #filepath = os.path.join('../../Occasio_Dev/inputs/DeepSTARR_data.h5') #load DeepSTARR data
-    filepath = os.path.join('../../Occasio_Dev/inputs/DeepSTARRdev.h5') 
+    filepath = os.path.join('../../Occasio_Dev/inputs/DeepSTARR_data.h5') #load DeepSTARR data
+    #filepath = os.path.join('../../Occasio_Dev/inputs/DeepSTARRdev.h5') 
     #filepath = os.path.join('../../Occasio_Dev/inputs/LentiMPRA_processed_for_dal.h5') #AC
     data = h5py.File(filepath, 'r')
     #ckpt_aug_path = os.path.join('oracle_DeepSTARR_DeepSTARR_data.ckpt') #Load DeepSTARR oracle model
