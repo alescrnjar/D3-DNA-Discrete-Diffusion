@@ -32,7 +32,8 @@ def get_dataloaders(config, distributed=True):
 
     # Deepstarr
     #filepath = os.path.join('DeepSTARR_data.h5') 
-    filepath = os.path.join('../../Occasio_Dev/inputs/DeepSTARR_data.h5') #AC
+    #filepath = os.path.join('../../Occasio_Dev/inputs/DeepSTARR_data.h5') #AC
+    filepath = os.path.join('../../Occasio_Dev/inputs/DeepSTARRdev.h5') #AC
     #filepath = os.path.join('../../Occasio_Dev/inputs/LentiMPRA_processed_for_dal.h5') #AC
     data = h5py.File(filepath, 'r')
     X_train = torch.tensor(np.array(data['X_train']))
