@@ -32,7 +32,7 @@ def main():
     #filepath = os.path.join('../../Occasio_Dev/inputs/DeepSTARRdev.h5') 
     #filepath = os.path.join('../../Occasio_Dev/inputs/LentiMPRA_processed_for_dal.h5') #AC
     data = h5py.File(filepath, 'r')
-    #ckpt_aug_path = os.path.join('oracle_DeepSTARR_DeepSTARR_data.ckpt') #Load DeepSTARR oracle model
+    ckpt_aug_path = os.path.join('oracle_DeepSTARR_DeepSTARR_data.ckpt') #Load DeepSTARR oracle model
     #ckpt_aug_path = os.path.join('../Occasio_Dev/inputs/oracle_ResidualBind_LentiMPRA_processed_for_dal_relustandard1.ckpt') #AC
     #ckpt_aug_path = os.path.join('../../Occasio_Dev/inputs/oracle_LegNet_LentiMPRA_processed_for_dal_bs100.ckpt') #AC
 
@@ -43,8 +43,8 @@ def main():
     testing_ds = TensorDataset(X_test, y_test)
     test_ds = torch.utils.data.DataLoader(testing_ds, batch_size=args.batch_size, shuffle=False,
                                              num_workers=4)
-    #deepstarr = PL_DeepSTARR.load_from_checkpoint(ckpt_aug_path, input_h5_file=filepath).eval()
-    deepstarr = PL_LegNet.load_from_checkpoint(ckpt_aug_path, input_h5_file=filepath).eval() #AC
+    deepstarr = PL_DeepSTARR.load_from_checkpoint(ckpt_aug_path, input_h5_file=filepath).eval()
+    #deepstarr = PL_LegNet.load_from_checkpoint(ckpt_aug_path, input_h5_file=filepath).eval() #AC
 
     val_pred_seq = []
     for _, (batch, val_target) in enumerate(test_ds):
