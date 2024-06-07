@@ -1,0 +1,14 @@
+#!/bin/bash
+
+path=$(pwd)
+while [ ! "$(ls -1 $path | grep NEXT)" ]; do
+path=$path"/.."
+done
+cd $path
+
+project=$(pwd | sed 's/\// /g' | awk '{print $NF}')
+
+### ### ###
+
+tail -20 $path/"$project"_diary.md
+
