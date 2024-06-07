@@ -282,8 +282,8 @@ class SEDD(nn.Module, PyTorchModelHubMixin):
         #Below code is for convolution
         n = 256
         embed_dim = 256
-        self.embed = nn.Sequential(GaussianFourierProjection(embed_dim=embed_dim),
-                                   nn.Linear(embed_dim, embed_dim))
+        #self.embed = nn.Sequential(GaussianFourierProjection(embed_dim=embed_dim), #AC
+        #                           nn.Linear(embed_dim, embed_dim))
         self.linear = nn.Conv1d(vocab_size + 1, n, kernel_size=9, padding=4)
         # self.linear = nn.Conv1d(vocab_size + 1, n, kernel_size=7, padding='same')
         self.conv_blocks = nn.ModuleList([nn.Conv1d(n, n, kernel_size=9, padding=4),
