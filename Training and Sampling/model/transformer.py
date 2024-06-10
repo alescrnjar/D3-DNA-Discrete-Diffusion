@@ -351,6 +351,7 @@ class SEDD(nn.Module, PyTorchModelHubMixin):
 
         #---------------------------------------------#
         # Uncomment below for convolution based networks
+        """
         x = torch.nn.functional.one_hot(indices, num_classes=4).float()
         label = torch.unsqueeze(self.label_emb(labels), dim=2)
         x = torch.cat([x, label], dim=-1)
@@ -369,5 +370,5 @@ class SEDD(nn.Module, PyTorchModelHubMixin):
 
         x = self.final(out)
         x = x.permute(0, 2, 1)
-
+        """
         return x
