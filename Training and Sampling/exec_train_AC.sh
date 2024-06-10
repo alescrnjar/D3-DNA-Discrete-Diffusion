@@ -2,10 +2,22 @@
 
 batch_size=128 #128
 name=lentimpra #deepstarr
+seqlength=230 #249
 
 echo \
-'
-defaults:
+'name: small
+type: ddit
+hidden_size: 768
+cond_dim: 128
+length: '$seqlength'
+n_blocks: 12
+n_heads: 12
+scale_by_sigma: True
+dropout: 0.1
+' > ./configs/model/small.yaml
+
+echo \
+'defaults:
   - _self_
   - model: small
   - override hydra/launcher: submitit_slurm
