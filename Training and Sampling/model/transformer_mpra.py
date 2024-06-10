@@ -209,7 +209,8 @@ class EmbeddingLayer(nn.Module):
         """
         super().__init__()
         self.embedding = nn.Parameter(torch.empty((vocab_dim, dim)))
-        self.signal_embedding = nn.Linear(3, dim)  # remove if label embedding is used
+        #self.signal_embedding = nn.Linear(3, dim)  # remove if label embedding is used
+        self.signal_embedding = nn.Linear(1, dim)  # remove if label embedding is used #AC : 1 (or 3) is number of outputs
         torch.nn.init.kaiming_uniform_(self.embedding, a=math.sqrt(5))
 
     def forward(self, x, y):
