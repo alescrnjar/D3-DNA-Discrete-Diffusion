@@ -3,6 +3,8 @@
 batch_size=128 #128
 name=lentimpra #deepstarr
 seqlength=230 #249
+ckpt_freq=50000
+# Anirban: checkpoint_meta is the latest.
 
 echo \
 'name: small
@@ -29,7 +31,7 @@ training:
   batch_size: '$batch_size'
   accum: 1
   n_iters: 500000
-  snapshot_freq: 50000
+  snapshot_freq: '$ckpt_freq'
   log_freq: 5000
   eval_freq: 5000
   snapshot_freq_for_preemption: 10000
