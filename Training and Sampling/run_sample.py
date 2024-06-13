@@ -30,11 +30,15 @@ def main():
     #filepath = os.path.join('DeepSTARR_data.h5') #load DeepSTARR data
     #filepath = os.path.join('../../Occasio_Dev/inputs/DeepSTARR_data.h5') #load DeepSTARR data
     #filepath = os.path.join('../../Occasio_Dev/inputs/DeepSTARRdev.h5') 
-    filepath = os.path.join('../../Occasio_Dev/inputs/LentiMPRA_processed_for_dal.h5') #AC
+    #filepath = os.path.join('../../Occasio_Dev/inputs/LentiMPRA_processed_for_dal.h5') #AC
+    filepath = os.path.join('../../Occasio_Dev/inputs/newLentiMPRAK562_processed_for_dal.h5') #AC
+    #filepath = os.path.join('../../Occasio_Dev/inputs/newLentiMPRAHepG2_processed_for_dal.h5') #AC
     data = h5py.File(filepath, 'r')
     #ckpt_aug_path = os.path.join('oracle_DeepSTARR_DeepSTARR_data.ckpt') #Load DeepSTARR oracle model
-    ckpt_aug_path = os.path.join('../Occasio_Dev/inputs/oracle_ResidualBind_LentiMPRA_processed_for_dal_relustandard1.ckpt') #AC
+    #ckpt_aug_path = os.path.join('../Occasio_Dev/inputs/oracle_ResidualBind_LentiMPRA_processed_for_dal_relustandard1.ckpt') #AC
     #ckpt_aug_path = os.path.join('../../Occasio_Dev/inputs/oracle_LegNet_LentiMPRA_processed_for_dal_bs100.ckpt') #AC
+    ckpt_aug_path = os.path.join('../Occasio_Dev/inputs/oracle_NewResNet_newLentiMPRAK562_processed_for_dal_finetune.ckpt') #AC
+    #ckpt_aug_path = os.path.join('../Occasio_Dev/inputs/oracle_NewResNet_newLentiMPRAHepG2_processed_for_dal_finetune.ckpt') #AC
 
     #We select test data to calculate MSE and generate samples. Change if required
     X_test = torch.tensor(np.array(data['X_test']))

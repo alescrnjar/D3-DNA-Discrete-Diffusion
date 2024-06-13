@@ -1,7 +1,7 @@
 #!/bin/bash
 
 batch_size=128 #128
-name=lentimpra #deepstarr
+name=NewResNet_K562 #deepstarr
 seqlength=230 #249
 ckpt_freq=50000
 # Anirban: checkpoint_meta is the latest.
