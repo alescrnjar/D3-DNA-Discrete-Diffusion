@@ -191,6 +191,6 @@ def _run(rank, world_size, cfg):
                     ema.copy_to(score_model.parameters())
                     ema.restore(score_model.parameters())
 
-                    np.savez(os.path.join(this_sample_dir, f"sample_{rank}.npz",), val_pred_seqs.cpu())
+                    #np.savez(os.path.join(this_sample_dir, f"sample_{rank}.npz",), val_pred_seqs.cpu())
 
                     dist.barrier()
