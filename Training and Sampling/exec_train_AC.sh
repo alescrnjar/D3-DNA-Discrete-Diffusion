@@ -91,7 +91,7 @@ hydra:
     gpus_per_node: ${ngpus}
     constraint: null
 
-' > ./config.yaml
+' > ./configs/config.yaml
 
 
 
