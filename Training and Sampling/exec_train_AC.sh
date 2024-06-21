@@ -1,10 +1,15 @@
 #!/bin/bash
 
 batch_size=128 #128
-name=NewResNet_K562 #deepstarr
+#name=NewResNet_K562 #deepstarr
+name=NewResNet_K562_25K_random #deepstarr
 seqlength=230 #249
 ckpt_freq=50000
+n_iters=500000
 # Anirban: checkpoint_meta is the latest.
+#dataname=newLentiMPRAK562_processed_for_dal
+dataname=newLentiMPRAHepG2_labels-seed0_random0_25000
+chosen_model=NewResNet
 
 echo \
 'name: small
@@ -30,7 +35,7 @@ tokens: 4
 training:
   batch_size: '$batch_size'
   accum: 1
-  n_iters: 500000
+  n_iters: '$n_iters'
   snapshot_freq: '$ckpt_freq'
   log_freq: 5000
   eval_freq: 5000
@@ -91,8 +96,14 @@ hydra:
     gpus_per_node: ${ngpus}
     constraint: null
 
-' > ./config.yaml
+' > ./configs/config.yaml
 
+
+cp data_XXX.py data.py
+sed -i 's/XXX/'$dataname'/' data.py
+sed -i 's/YYY/'$chosen_model'/' data.py
+cp run_sample_XXX.py run_sample.py
+sed -i 's/XXX//' run_sample.py
 
 
 #echo "conda activate d3"
@@ -105,3 +116,5 @@ CUDA_LAUNCH_BLOCKING=1 CUDA_VISIBLE_DEVICES=$visdevs python train.py noise.type=
 #pip install hydra can work but if it doesnt:
 #pip install hydra-core==1.3.2
 #pip install hydra-submitit-launcher==1.2.0
+
+echo "SCRIPT END."
