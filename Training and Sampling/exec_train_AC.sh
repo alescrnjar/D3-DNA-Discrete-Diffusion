@@ -116,3 +116,5 @@ CUDA_LAUNCH_BLOCKING=1 CUDA_VISIBLE_DEVICES=$visdevs python train.py noise.type=
 #pip install hydra can work but if it doesnt:
 #pip install hydra-core==1.3.2
 #pip install hydra-submitit-launcher==1.2.0
+
+echo "SCRIPT END."
