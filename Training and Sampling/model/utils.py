@@ -14,7 +14,8 @@ def get_model_fn(model, train=False):
         A model function.
     """
 
-    def model_fn(x, labels, sigma):
+    def model_fn(x, sigma):  #VANILLA/CONDITIONING
+    #def model_fn(x, labels, sigma): #VANILLA/CONDITIONING
         """Compute the output of the score-based model.
 
         Args:
@@ -31,7 +32,8 @@ def get_model_fn(model, train=False):
             model.eval()
         
             # otherwise output the raw values (we handle mlm training in losses.py)
-        return model(x, labels, train, sigma)
+        return model(x, train, sigma) #VANILLA/CONDITIONING
+        #return model(x, labels, train, sigma) #VANILLA/CONDITIONING
 
     return model_fn
 
@@ -42,9 +44,11 @@ def get_score_fn(model, train=False, sampling=False):
     model_fn = get_model_fn(model, train=train)
 
     with torch.cuda.amp.autocast(dtype=torch.bfloat16):
-        def score_fn(x, labels, sigma):
+        def score_fn(x, sigma): #VANILLA/CONDITIONING
+        #def score_fn(x, labels, sigma): #VANILLA/CONDITIONING
             sigma = sigma.reshape(-1)
-            score = model_fn(x, labels, sigma)
+            score = model_fn(x, sigma) #VANILLA/CONDITIONING
+            #score = model_fn(x, labels, sigma) #VANILLA/CONDITIONING
             
             if sampling:
                 # when sampling return true score (not log used for training)
