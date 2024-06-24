@@ -356,7 +356,8 @@ class SEDD(nn.Module, PyTorchModelHubMixin):
             else bias_dropout_add_scale_fused_inference
         )
 
-    def forward(self, indices, labels, train, sigma):
+    def forward(self, indices, train, sigma): #VANILLA/CONDITIONING
+    #def forward(self, indices, labels, train, sigma):  #VANILLA/CONDITIONING
         # Uncomment below for original transformer based networks
         x = self.vocab_embed(indices) #VANILLA/CONDITIONING
         #x = self.vocab_embed(indices, labels) #VANILLA/CONDITIONING
