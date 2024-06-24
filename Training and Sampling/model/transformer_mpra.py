@@ -222,7 +222,7 @@ class EmbeddingLayer(nn.Module):
         # print (vocab_embed.shape)
         # print (signal_embed.shape)
         #return torch.add(vocab_embed, signal_embed[:, None, :])  # [:, None, :] extra for deepstarr  #VANILLA/CONDITIONING
-        return torch.add(vocab_embed)  # [:, None, :] extra for deepstarr  #VANILLA/CONDITIONING
+        return vocab_embed  # [:, None, :] extra for deepstarr  #VANILLA/CONDITIONING
 
 
 class DDitFinalLayer(nn.Module):
