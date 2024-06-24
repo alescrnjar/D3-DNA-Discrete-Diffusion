@@ -8,7 +8,8 @@ from model import utils as mutils
 
 def get_loss_fn(noise, graph, train, sampling_eps=1e-3, lv=False):
 
-    def loss_fn(model, batch, labels, cond=None, t=None, perturbed_batch=None):
+    def loss_fn(model, batch, cond=None, t=None, perturbed_batch=None): #VANILLA/CONDITIONING
+    #def loss_fn(model, batch, labels, cond=None, t=None, perturbed_batch=None): #VANILLA/CONDITIONING
         """
         Batch shape: [B, L] int. D given from graph
         """
@@ -25,7 +26,8 @@ def get_loss_fn(noise, graph, train, sampling_eps=1e-3, lv=False):
             perturbed_batch = graph.sample_transition(batch, sigma[:, None])
 
         log_score_fn = mutils.get_score_fn(model, train=train, sampling=False)
-        log_score = log_score_fn(perturbed_batch, labels, sigma)
+        log_score = log_score_fn(perturbed_batch , sigma) #VANILLA/CONDITIONING
+        #log_score = log_score_fn(perturbed_batch, labels, sigma) #VANILLA/CONDITIONING
         loss = graph.score_entropy(log_score, sigma[:, None], perturbed_batch, batch)
 
         loss = (dsigma[:, None] * loss).sum(dim=-1)
@@ -80,7 +82,8 @@ def get_step_fn(noise, graph, train, optimize_fn, accum):
     accum_iter = 0
     total_loss = 0
 
-    def step_fn(state, batch, labels, cond=None):
+    def step_fn(state, batch, cond=None): #VANILLA/CONDITIONING
+    #def step_fn(state, batch, labels, cond=None): #VANILLA/CONDITIONING
         nonlocal accum_iter 
         nonlocal total_loss
 
@@ -89,7 +92,8 @@ def get_step_fn(noise, graph, train, optimize_fn, accum):
         if train:
             optimizer = state['optimizer']
             scaler = state['scaler']
-            loss = loss_fn(model, batch, labels, cond=cond).mean() / accum
+            loss = loss_fn(model, batch, cond=cond).mean() / accum #VANILLA/CONDITIONING
+            #loss = loss_fn(model, batch, labels, cond=cond).mean() / accum #VANILLA/CONDITIONING
             
             scaler.scale(loss).backward()
 
@@ -110,7 +114,8 @@ def get_step_fn(noise, graph, train, optimize_fn, accum):
                 ema = state['ema']
                 ema.store(model.parameters())
                 ema.copy_to(model.parameters())
-                loss = loss_fn(model, batch, labels, cond=cond).mean()
+                loss = loss_fn(model, batch, cond=cond).mean() #VANILLA/CONDITIONING
+                #loss = loss_fn(model, batch, labels, cond=cond).mean() #VANILLA/CONDITIONING
                 ema.restore(model.parameters())
 
         return loss

@@ -146,7 +146,8 @@ def _run(rank, world_size, cfg):
         batch = next(train_iter)#.to(device)
         inputs, target = batch
         inputs, target = inputs.to(device), target.to(device)
-        loss = train_step_fn(state, inputs, target)
+        loss = train_step_fn(state, inputs) #VANILLA/CONDITIONING
+        #loss = train_step_fn(state, inputs, target) #VANILLA/CONDITIONING
 
         # flag to see if there was movement ie a full batch got computed
         if step != state['step']:
@@ -165,7 +166,8 @@ def _run(rank, world_size, cfg):
                 eval_inputs=eval_inputs.to(device)
                 eval_target=eval_target.to(device)
                 #eval_inputs, eval_target = eval_inputs.to(device), torch.bucketize(eval_target, boundaries).to(device)
-                eval_loss = eval_step_fn(state, eval_inputs, eval_target)
+                eval_loss = eval_step_fn(state, eval_inputs) #VANILLA/CONDITIONING
+                #eval_loss = eval_step_fn(state, eval_inputs, eval_target) #VANILLA/CONDITIONING
 
                 dist.all_reduce(eval_loss)
                 eval_loss /= world_size
