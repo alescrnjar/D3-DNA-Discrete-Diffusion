@@ -358,7 +358,8 @@ class SEDD(nn.Module, PyTorchModelHubMixin):
 
     def forward(self, indices, labels, train, sigma):
         # Uncomment below for original transformer based networks
-        x = self.vocab_embed(indices, labels)
+        x = self.vocab_embed(indices) #VANILLA/CONDITIONING
+        #x = self.vocab_embed(indices, labels) #VANILLA/CONDITIONING
         c = F.silu(self.sigma_map(sigma))# + self.label_embed(labels, train))
         rotary_cos_sin = self.rotary_emb(x)
 

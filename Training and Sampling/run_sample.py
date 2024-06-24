@@ -56,7 +56,8 @@ def main():
         sampling_fn = sampling.get_pc_sampler(
             graph, noise, (batch.shape[0], 249), 'analytic', args.steps, device=device
         )
-        sample = sampling_fn(model, val_target.to(device))
+        sample = sampling_fn(model) #VANILLA/CONDITIONING
+        #sample = sampling_fn(model, val_target.to(device)) #VANILLA/CONDITIONING
         seq_pred_one_hot = torch.nn.functional.one_hot(sample, num_classes=4).float()
         val_pred_seq.append(seq_pred_one_hot)
 
