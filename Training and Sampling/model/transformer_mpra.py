@@ -213,14 +213,16 @@ class EmbeddingLayer(nn.Module):
         self.signal_embedding = nn.Linear(1, dim)  # remove if label embedding is used #AC : 1 (or 3) is number of outputs
         torch.nn.init.kaiming_uniform_(self.embedding, a=math.sqrt(5))
 
-    def forward(self, x, y):
+    def forward(self, x): #VANILLA/CONDITIONING
+    #def forward(self, x, y): #VANILLA/CONDITIONING
         # print (x.shape, x.dtype)
         # print (y.shape, y.dtype)
         vocab_embed = self.embedding[x]  # return only this if label embedding is used
-        signal_embed = self.signal_embedding(y.to(torch.float32))
+        #signal_embed = self.signal_embedding(y.to(torch.float32))  #VANILLA/CONDITIONING
         # print (vocab_embed.shape)
         # print (signal_embed.shape)
-        return torch.add(vocab_embed, signal_embed[:, None, :])  # [:, None, :] extra for deepstarr
+        #return torch.add(vocab_embed, signal_embed[:, None, :])  # [:, None, :] extra for deepstarr  #VANILLA/CONDITIONING
+        return torch.add(vocab_embed)  # [:, None, :] extra for deepstarr  #VANILLA/CONDITIONING
 
 
 class DDitFinalLayer(nn.Module):
