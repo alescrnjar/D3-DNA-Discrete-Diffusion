@@ -82,7 +82,7 @@ def get_step_fn(noise, graph, train, optimize_fn, accum):
     accum_iter = 0
     total_loss = 0
 
-    def step_fn(state, batch, cond=None): #VANILLA/CONDITIONING
+    def step_fn(state, batch): #VANILLA/CONDITIONING
     #def step_fn(state, batch, labels, cond=None): #VANILLA/CONDITIONING
         nonlocal accum_iter 
         nonlocal total_loss
@@ -92,7 +92,7 @@ def get_step_fn(noise, graph, train, optimize_fn, accum):
         if train:
             optimizer = state['optimizer']
             scaler = state['scaler']
-            loss = loss_fn(model, batch, cond=cond).mean() / accum #VANILLA/CONDITIONING
+            loss = loss_fn(model, batch).mean() / accum #VANILLA/CONDITIONING
             #loss = loss_fn(model, batch, labels, cond=cond).mean() / accum #VANILLA/CONDITIONING
             
             scaler.scale(loss).backward()
@@ -114,7 +114,7 @@ def get_step_fn(noise, graph, train, optimize_fn, accum):
                 ema = state['ema']
                 ema.store(model.parameters())
                 ema.copy_to(model.parameters())
-                loss = loss_fn(model, batch, cond=cond).mean() #VANILLA/CONDITIONING
+                loss = loss_fn(model, batch).mean() #VANILLA/CONDITIONING
                 #loss = loss_fn(model, batch, labels, cond=cond).mean() #VANILLA/CONDITIONING
                 ema.restore(model.parameters())
 
