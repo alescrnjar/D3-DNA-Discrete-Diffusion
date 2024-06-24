@@ -100,11 +100,11 @@ hydra:
 
 
 cp data_XXX.py data.py
-sed -i 's/XXX/'$dataname'/' data.py
-sed -i 's/YYY/'$chosen_model'/' data.py
+sed -i 's/XXX/'$dataname'/g' data.py
+sed -i 's/YYY/'$chosen_model'/g' data.py
 cp run_sample_XXX.py run_sample.py
-sed -i 's/XXX//' run_sample.py
-
+sed -i 's/XXX/'$dataname'/g' run_sample.py
+sed -i 's/YYY/'$chosen_model'/g' run_sample.py
 
 #echo "conda activate d3"
 visdevs=$1 #0,1,2,3
