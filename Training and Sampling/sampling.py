@@ -74,12 +74,14 @@ class NonePredictor(Predictor):
 
 @register_predictor(name="analytic")
 class AnalyticPredictor(Predictor):
-    def update_fn(self, score_fn, x, labels, t, step_size):
+    def update_fn(self, score_fn, x, t, step_size): #VANILLA/CONDITIONING
+    #def update_fn(self, score_fn, x, labels, t, step_size): #VANILLA/CONDITIONING
         curr_sigma = self.noise(t)[0]
         next_sigma = self.noise(t - step_size)[0]
         dsigma = curr_sigma - next_sigma
 
-        score = score_fn(x, labels, curr_sigma)
+        score = score_fn(x, curr_sigma) #VANILLA/CONDITIONING
+        #score = score_fn(x, labels, curr_sigma) #VANILLA/CONDITIONING
 
         stag_score = self.graph.staggered_score(score, dsigma)
         # print (stag_score.shape)
@@ -126,7 +128,8 @@ def get_pc_sampler(graph, noise, batch_dims, predictor, steps, denoise=True, eps
     denoiser = Denoiser(graph, noise)
 
     @torch.no_grad()
-    def pc_sampler(model, labels):
+    def pc_sampler(model):  #VANILLA/CONDITIONING
+    #def pc_sampler(model, labels):  #VANILLA/CONDITIONING
         sampling_score_fn = mutils.get_score_fn(model, train=False, sampling=True)
         x = graph.sample_limit(*batch_dims).to(device)
         timesteps = torch.linspace(1, eps, steps + 1, device=device)
@@ -135,7 +138,8 @@ def get_pc_sampler(graph, noise, batch_dims, predictor, steps, denoise=True, eps
         for i in range(steps):
             t = timesteps[i] * torch.ones(x.shape[0], 1, device=device)
             x = projector(x)
-            x = predictor.update_fn(sampling_score_fn, x, labels, t, dt)
+            x = predictor.update_fn(sampling_score_fn, x, t, dt) #VANILLA/CONDITIONING
+            #x = predictor.update_fn(sampling_score_fn, x, labels, t, dt) #VANILLA/CONDITIONING
             # print(x)
             
 
@@ -143,7 +147,8 @@ def get_pc_sampler(graph, noise, batch_dims, predictor, steps, denoise=True, eps
             # denoising step
             x = projector(x)
             t = timesteps[-1] * torch.ones(x.shape[0], 1, device=device)
-            x = denoiser.update_fn(sampling_score_fn, x, labels, t)
+            x = denoiser.update_fn(sampling_score_fn, x, t) #VANILLA/CONDITIONING
+            #x = denoiser.update_fn(sampling_score_fn, x, labels, t) #VANILLA/CONDITIONING
             
         return x
     
