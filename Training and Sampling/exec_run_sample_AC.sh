@@ -1,6 +1,6 @@
 #!/bin/bash
 
-dataname=newLentiMPRAK562_labels-seed0_random0_25000
+dataname=newLentiMPRAK562_processed_for_dal
 chosen_model=NewResNet
 MODEL_PATH=./exp_local/NewResNet_K562_25K_random/2024.06.24/114726
 STEPS=128
