@@ -51,7 +51,7 @@ def main():
                                              num_workers=4)
     #deepstarr = PL_DeepSTARR.load_from_checkpoint(ckpt_aug_path, input_h5_file=filepath).eval()
     #deepstarr = PL_LegNet.load_from_checkpoint(ckpt_aug_path, input_h5_file=filepath).eval() #AC
-    deepstarr = PL_ResidualBind.load_from_checkpoint(ckpt_aug_path, input_h5_file=filepath).eval() #AC
+    #deepstarr = PL_ResidualBind.load_from_checkpoint(ckpt_aug_path, input_h5_file=filepath).eval() #AC  #VANILLA/CONDITIONING
 
     val_pred_seq = []
     for _, (batch, val_target) in enumerate(test_ds):
@@ -64,12 +64,12 @@ def main():
         val_pred_seq.append(seq_pred_one_hot)
 
     val_pred_seqs = torch.cat(val_pred_seq, dim=0)
-    val_score = deepstarr.predict_custom(deepstarr.X_test.to(device))
-    val_pred_score = deepstarr.predict_custom(val_pred_seqs.permute(0, 2, 1).to(device))
-    sp_mse = (val_score - val_pred_score) ** 2
-    mean_sp_mse = torch.mean(sp_mse).cpu()
-    print(f"all-sp-mse {mean_sp_mse}")
-    np.savez(os.path.join(args.model_path, f"sample_{rank}.npz", ), val_pred_seqs.cpu())
+    #val_score = deepstarr.predict_custom(deepstarr.X_test.to(device))  #VANILLA/CONDITIONING
+    #val_pred_score = deepstarr.predict_custom(val_pred_seqs.permute(0, 2, 1).to(device))  #VANILLA/CONDITIONING
+    #sp_mse = (val_score - val_pred_score) ** 2  #VANILLA/CONDITIONING
+    #mean_sp_mse = torch.mean(sp_mse).cpu()  #VANILLA/CONDITIONING
+    #print(f"all-sp-mse {mean_sp_mse}")  #VANILLA/CONDITIONING
+    #np.savez(os.path.join(args.model_path, f"sample_{rank}.npz", ), val_pred_seqs.cpu())  #VANILLA/CONDITIONING
 
 if __name__=="__main__":
     main()
