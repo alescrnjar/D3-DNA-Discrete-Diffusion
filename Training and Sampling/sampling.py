@@ -42,7 +42,8 @@ class Predictor(abc.ABC):
         self.noise = noise
 
     @abc.abstractmethod
-    def update_fn(self, score_fn, x, labels, t, step_size):
+    def update_fn(self, score_fn, x, t, step_size): #VANILLA/CONDITIONING
+    #def update_fn(self, score_fn, x, labels, t, step_size): #VANILLA/CONDITIONING
         """One update of the predictor.
 
         Args:
@@ -58,9 +59,11 @@ class Predictor(abc.ABC):
 
 @register_predictor(name="euler")
 class EulerPredictor(Predictor):
-    def update_fn(self, score_fn, x, labels, t, step_size):
+    def update_fn(self, score_fn, x, t, step_size): #VANILLA/CONDITIONING
+    #def update_fn(self, score_fn, x, labels, t, step_size): #VANILLA/CONDITIONING
         sigma, dsigma = self.noise(t)
-        score = score_fn(x, labels, sigma)
+        score = score_fn(x, sigma) #VANILLA/CONDITIONING
+        #score = score_fn(x, labels, sigma) #VANILLA/CONDITIONING
 
         rev_rate = step_size * dsigma[..., None] * self.graph.reverse_rate(x, score)
         x = self.graph.sample_rate(x, rev_rate)
@@ -68,7 +71,8 @@ class EulerPredictor(Predictor):
 
 @register_predictor(name="none")
 class NonePredictor(Predictor):
-    def update_fn(self, score_fn, x, labels, t, step_size):
+    def update_fn(self, score_fn, x, t, step_size): #VANILLA/CONDITIONING
+    #def update_fn(self, score_fn, x, labels, t, step_size): #VANILLA/CONDITIONING
         return x
 
 
@@ -94,10 +98,12 @@ class Denoiser:
         self.graph = graph
         self.noise = noise
 
-    def update_fn(self, score_fn, x, labels, t):
+    def update_fn(self, score_fn, x, t): #VANILLA/CONDITIONING
+    #def update_fn(self, score_fn, x, labels, t):  #VANILLA/CONDITIONING
         sigma = self.noise(t)[0]
 
-        score = score_fn(x, labels, sigma)
+        score = score_fn(x, sigma)  #VANILLA/CONDITIONING
+        #score = score_fn(x, labels, sigma)  #VANILLA/CONDITIONING
         stag_score = self.graph.staggered_score(score, sigma)
         probs = stag_score * self.graph.transp_transition(x, sigma)
         # truncate probabilities
