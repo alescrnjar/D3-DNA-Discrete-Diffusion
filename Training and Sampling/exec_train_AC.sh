@@ -7,8 +7,8 @@ seqlength=230 #249
 ckpt_freq=50000
 n_iters=500000
 # Anirban: checkpoint_meta is the latest.
-#dataname=newLentiMPRAK562_processed_for_dal
-dataname=newLentiMPRAHepG2_labels-seed0_random0_25000
+dataname=newLentiMPRAK562_processed_for_dal
+#dataname=newLentiMPRAHepG2_labels-seed0_random0_25000
 chosen_model=NewResNet
 
 echo \
