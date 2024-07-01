@@ -56,7 +56,7 @@ def main():
     val_pred_seq = []
     for _, (batch, val_target) in enumerate(test_ds):
         sampling_fn = sampling.get_pc_sampler(
-            graph, noise, (batch.shape[0], 249), 'analytic', args.steps, device=device
+            graph, noise, (batch.shape[0], LLL), 'analytic', args.steps, device=device
         )
         sample = sampling_fn(model) #VANILLA/CONDITIONING
         #sample = sampling_fn(model, val_target.to(device)) #VANILLA/CONDITIONING
