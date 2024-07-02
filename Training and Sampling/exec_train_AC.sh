@@ -117,6 +117,8 @@ echo "Visible devices: $visdevs"
 date
 CUDA_LAUNCH_BLOCKING=1 CUDA_VISIBLE_DEVICES=$visdevs python train.py noise.type=geometric graph.type=uniform model=small model.scale_by_sigma=False
 
+# pip install torch==2.0.1+cu117 --index-url https://download.pytorch.org/whl/cu117
+
 #pip install hydra can work but if it doesnt:
 #pip install hydra-core==1.3.2
 #pip install hydra-submitit-launcher==1.2.0
