@@ -188,10 +188,10 @@ class DDiTBlock(nn.Module):
             )
         else:
             cu_seqlens = seqlens.cumsum(-1)
-        print(f"4FLASHATTN {qkv.shape=} {cu_seqlens=} {seq_len=}")
+        #print(f"4FLASHATTN {qkv.shape=} {cu_seqlens=} {seq_len=}")
         x = flash_attn_varlen_qkvpacked_func(
             qkv, cu_seqlens, seq_len, 0., causal=False)
-        print(f"{x.shape=}")
+        #print(f"{x.shape=}")
 
         x = rearrange(x, '(b s) h d -> b s (h d)', b=batch_size)
 
