@@ -3,8 +3,8 @@
 batch_size=128 #128
 #name=NewResNet_K562 #deepstarr
 #name=NewResNet_K562_25K_random #deepstarr
-#name=LegNet_K562_20K_random 
-name=NewResNet_K562_20K_random 
+name=LegNet_K562_20K_random_cond
+#name=NewResNet_K562_20K_random 
 seqlength=230 #249
 ckpt_freq=50000
 n_iters=500000
@@ -12,8 +12,8 @@ n_iters=500000
 ##dataname=newLentiMPRAK562_processed_for_dal
 #dataname=newLentiMPRAK562_labels-seed0_random0_25000
 dataname=newLentiMPRAK562_labels-seed0_random0_20000
-chosen_model=NewResNet
-#chosen_model=LegNetPK
+#chosen_model=NewResNet
+chosen_model=LegNetPK
 
 echo \
 'name: small
