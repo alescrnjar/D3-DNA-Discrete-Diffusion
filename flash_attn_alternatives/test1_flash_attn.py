@@ -1,8 +1,9 @@
 import torch
 import torch.nn.functional as F
-from flash_attn.flash_attn_interface import flash_attn_varlen_qkvpacked_func
+#from flash_attn.flash_attn_interface import flash_attn_varlen_qkvpacked_func
+from manual_flash_attn import *
 
-def vanilla_attention(qkv, mask=None):
+def vanilla_attention_claude(qkv, mask=None):
     # Assume qkv is packed as (batch_size, seq_len, 3 * hidden_dim)
     batch_size, seq_len, _ = qkv.size()
     hidden_dim = qkv.size(-1) // 3
@@ -61,12 +62,22 @@ if __name__=='__main__':
        dtype=torch.int32) .to(device)
     seq_len=230
 
-    output_flash = flash_attn_varlen_qkvpacked_func(qkv, cu_seqlens, seq_len, 0., causal=False)
-    print(f"{output_flash=}")
+    #output_flash = flash_attn_varlen_qkvpacked_func(qkv, cu_seqlens, seq_len, 0., causal=False) # https://github.com/Dao-AILab/flash-attention/blob/main/flash_attn/flash_attn_interface.py
+    #print(f"{output_flash=}")
     #output_noflash = vanilla_attention(qkv, mask=None) #output.shape=torch.Size([58880, 12, 64])
+    output_manflash = flash_attn_varlen_qkvpacked_func_AC(qkv, cu_seqlens, seq_len, 0., causal=False)
+    print(f"{output_manflash=}")
+    exit()
     output_noflash = vanilla_attention(qkv[0], mask=None) #output.shape=torch.Size([58880, 12, 64])
     print(f"{output_noflash=}")
     print(f"{output_flash.shape=}")
     print(f"{output_noflash.shape=}")
     print(f"{(output_flash.shape==output_noflash.shape)=}")
     print(f"{(output_flash==output_noflash).all=}")
+
+"""
+PROSS:
+flash_attn_cuda.varlen_fwd:
+import flash_attn_2_cuda as flash_attn_cuda:
+Where do I find it??
+"""
