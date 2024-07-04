@@ -62,5 +62,10 @@ if __name__=='__main__':
     seq_len=230
 
     output_flash = flash_attn_varlen_qkvpacked_func(qkv, cu_seqlens, seq_len, 0., causal=False)
-    print(f"{output_flash=} {output_flash.shape=}")
-    #output_noflash = vanilla_attention(qkv, mask=None) #output.shape=torch.Size([58880, 12, 64])
+    print(f"{output_flash=}")
+    output_noflash = vanilla_attention(qkv, mask=None) #output.shape=torch.Size([58880, 12, 64])
+    print(f"{output_noflash=}")
+    print(f"{output_flash.shape=}")
+    print(f"{output_noflash.shape=}")
+    print(f"{(output_flash.shape==output_noflash.shape)=}")
+    print(f"{(output_flash==output_noflash).all=}")
