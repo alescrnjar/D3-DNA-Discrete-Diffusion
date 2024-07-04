@@ -29,8 +29,8 @@ def vanilla_attention(qkv, mask=None):
     return output
 
 if __name__=='__main__':
-    
-    qkv=torch.rand((58880, 3, 12, 64), dtype=torch.bfloat16) 
+    device = torch.device('cuda')
+    qkv=torch.rand((58880, 3, 12, 64), dtype=torch.bfloat16).to(device) 
 
     cu_seqlens=torch.tensor([    0,   230,   460,   690,   920,  1150,  1380,  1610,  1840,  2070,
          2300,  2530,  2760,  2990,  3220,  3450,  3680,  3910,  4140,  4370,
@@ -57,8 +57,8 @@ if __name__=='__main__':
         50600, 50830, 51060, 51290, 51520, 51750, 51980, 52210, 52440, 52670,
         52900, 53130, 53360, 53590, 53820, 54050, 54280, 54510, 54740, 54970,
         55200, 55430, 55660, 55890, 56120, 56350, 56580, 56810, 57040, 57270,
-        57500, 57730, 57960, 58190, 58420, 58650, 58880], device='cuda:0',
-       dtype=torch.int32) 
+        57500, 57730, 57960, 58190, 58420, 58650, 58880], #device='cuda:0',
+       dtype=torch.int32) .to(device)
     seq_len=230
 
     output_flash = flash_attn_varlen_qkvpacked_func(qkv, cu_seqlens, seq_len, 0., causal=False)
