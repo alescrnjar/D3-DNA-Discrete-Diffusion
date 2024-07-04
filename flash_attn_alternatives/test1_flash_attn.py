@@ -1,5 +1,6 @@
 import torch
 import torch.nn.functional as F
+from flash_attn.flash_attn_interface import flash_attn_varlen_qkvpacked_func
 
 def vanilla_attention(qkv, mask=None):
     # Assume qkv is packed as (batch_size, seq_len, 3 * hidden_dim)
@@ -60,7 +61,6 @@ if __name__=='__main__':
        dtype=torch.int32) 
     seq_len=230
 
-    # Replace FlashAttention call with vanilla attention
-    # Instead of:
-    # output = flash_attn_varlen_qkvpacked_func(qkv, ...)
-    output = vanilla_attention(qkv, mask) #output.shape=torch.Size([58880, 12, 64])
+    output_flash = flash_attn_varlen_qkvpacked_func(qkv, cu_seqlens, seq_len, 0., causal=False)
+    print(f"{output_flash=} {output_flash.shape=}")
+    #output_noflash = vanilla_attention(qkv, mask=None) #output.shape=torch.Size([58880, 12, 64])
