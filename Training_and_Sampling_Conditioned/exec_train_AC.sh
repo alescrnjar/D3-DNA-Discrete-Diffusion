@@ -3,7 +3,8 @@
 batch_size=128 #128
 #name=NewResNet_K562 #deepstarr
 #name=NewResNet_K562_25K_random #deepstarr
-name=LegNet_K562_20K_random_cond
+#name=LegNet_K562_20K_random_cond
+name=LegNet_K562_130K_random_cond
 #name=NewResNet_K562_20K_random 
 seqlength=230 #249
 ckpt_freq=50000
@@ -11,7 +12,8 @@ n_iters=500000
 # Anirban: checkpoint_meta is the latest.
 ##dataname=newLentiMPRAK562_processed_for_dal
 #dataname=newLentiMPRAK562_labels-seed0_random0_25000
-dataname=newLentiMPRAK562_labels-seed0_random0_20000
+#dataname=newLentiMPRAK562_labels-seed0_random0_20000
+dataname=newLentiMPRAK562_labels-seed0_random0_130000
 #chosen_model=NewResNet
 chosen_model=LegNetPK
 
