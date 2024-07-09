@@ -78,6 +78,6 @@ if __name__=='__main__':
 """
 PROSS:
 flash_attn_cuda.varlen_fwd:
-import flash_attn_2_cuda as flash_attn_cuda:
+import flash_attn_2_cuda as flash_attn_cuda: pip show not useful!
 Where do I find it??
 """
