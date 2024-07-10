@@ -80,4 +80,6 @@ PROSS:
 flash_attn_cuda.varlen_fwd:
 import flash_attn_2_cuda as flash_attn_cuda: pip show not useful!
 Where do I find it??
+
+Anirban's finding: https://discuss.pytorch.org/t/flash-attention/174955
 """
