@@ -398,7 +398,7 @@ class SEDD(nn.Module, PyTorchModelHubMixin):
         c = F.silu(self.sigma_map(sigma))# + self.label_embed(labels, train))
         rotary_cos_sin = self.rotary_emb(x)
 
-        with torch.cuda.amp.autocast(dtype=torch.bfloat16):
+        with torch.cuda.amp.autocast(dtype=torch.float32):
             for i in range(len(self.blocks)):
                 x = self.blocks[i](x, rotary_cos_sin, c, seqlens=None)
 

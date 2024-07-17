@@ -43,7 +43,7 @@ def get_score_fn(model, train=False, sampling=False):
         assert not train, "Must sample in eval mode"
     model_fn = get_model_fn(model, train=train)
 
-    with torch.cuda.amp.autocast(dtype=torch.bfloat16):
+    with torch.cuda.amp.autocast(dtype=torch.float32):
         #def score_fn(x, sigma): #VANILLA/C
         def score_fn(x, labels, sigma): #V/CONDITIONING
             sigma = sigma.reshape(-1)
