@@ -113,10 +113,10 @@ sed -i 's/XXX/'$dataname'/g' run_sample.py
 sed -i 's/YYY/'$chosen_model'/g' run_sample.py
 
 #echo "conda activate d3"
-visdevs=$1 #0,1,2,3
-if [ ${#visdevs} = 0 ] ; then visdevs=0 ; fi
-echo "Visible devices: $visdevs"
-date
+#visdevs=$1 #0,1,2,3
+#if [ ${#visdevs} = 0 ] ; then visdevs=0 ; fi
+#echo "Visible devices: $visdevs"
+#date
 #CUDA_LAUNCH_BLOCKING=1 CUDA_VISIBLE_DEVICES=$visdevs python train.py noise.type=geometric graph.type=uniform model=small model.scale_by_sigma=False
 #CUDA_LAUNCH_BLOCKING=1 CUDA_VISIBLE_DEVICES=$visdevs python train.py noise.type=geometric graph.type=uniform model=small model.scale_by_sigma=False
 
@@ -130,7 +130,10 @@ echo \
 #$ -o nohup.D3_train.out
 #$ -e stderr.D3_train.out
 
+date
 CUBLAS_WORKSPACE_CONFIG=:4096:8  python train.py noise.type=geometric graph.type=uniform model=small model.scale_by_sigma=False
+date
+echo "SCRIPT END"
 ' > $jobf
 
 # pip install torch==2.0.1+cu117 --index-url https://download.pytorch.org/whl/cu117
