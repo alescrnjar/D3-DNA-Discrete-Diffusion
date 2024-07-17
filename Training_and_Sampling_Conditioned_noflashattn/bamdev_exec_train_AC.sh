@@ -1,6 +1,6 @@
 #!/bin/bash
 
-batch_size=128 #128
+batch_size=100 #128 #128
 #name=NewResNet_K562 #deepstarr
 #name=NewResNet_K562_25K_random #deepstarr
 name=LegNet_K562_20K_random_cond_noflash
